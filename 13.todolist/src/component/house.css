@@ -1,0 +1,26 @@
+.door {
+  fill: #d1495b;
+}
+.stair {
+  fill: gray;
+}
+.window {
+  fill: #fdea96;
+}
+.window-sill {
+  fill: #d1495b;
+  stroke-linecap: round;
+}
+
+.roof {
+  fill: none;
+  stroke: #d1495b;
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
+
+.house {
+  stroke: black;
+  stroke-width: 2px;
+  fill: white;
+}

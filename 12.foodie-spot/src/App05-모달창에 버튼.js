@@ -31,16 +31,11 @@ function App() {
                 setLike(copy)
               }}>냐미</span>{like[i]}
               </p>
-              <button onClick={() => {
-                let k = [...title]
-                k.splice(i, 1);
-                setTitle(k);
-              }}>삭제</button>
             </div>
           )
         }) 
       }
-      <input onChange={(e)=>{setInputValue(e.target.value); console.log(inputValue)}} />
+     <input onChange={(e)=>{setInputValue(e.target.value); console.log(inputValue)}}></input>
       <button onClick={() => {
         let c = [...title];
         c.unshift(inputValue);
@@ -53,14 +48,5 @@ function App() {
 
 
 {/* 3. index넘겨주기 */}
-function Modal() {
-  return(
-    <div className="modal">
-      <h4>제목</h4>
-        <p>날짜</p>
-        <p>상세내용</p>
-    </div>
-  )
-}
 
 export default App;
