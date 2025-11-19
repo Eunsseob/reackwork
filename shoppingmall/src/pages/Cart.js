@@ -3,18 +3,44 @@ import { useDispatch, useSelector } from 'react-redux';
 import { countIncrease } from '../store/store';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+// import user from './login';
 
 function Cart() {
+    // const [list, setList] = useState([]);
+    // const user = JSON.parse(sessionStorage.getItem('loginUser'));
+
+    // useEffect(() => {
+    //     axios.get('http://localhost:8080/react/getCart', {params: {memId: user.email}})
+    //     .then((result) => {
+    //         console.log(user.email);
+    //         setList(result.data);
+    //     })
+    //     .catch(() => {
+    //         console.log('실패');
+    //     });
+    // }, [])
+    
     const [list, setList] = useState([]);
+
     useEffect(() => {
-        axios.get('/react/getCart')
-        .then((result) => {
-            setList(result.data);
-        })
-        .catch(() => {
-            console.log('실패');
-        });
-    }, [])
+        const user = JSON.parse(sessionStorage.getItem('loginUser'));
+
+        if(!user) {
+            console.log('로그인 후 사용');
+            return;
+        }
+
+        axios.get('http://localhost:8080/react/getCart', {params:{memId: user.email}})
+             .then(result => {
+                console.log(user.email);
+                setList(result.data);
+             })
+             .catch(() => {
+                console.log("실패");
+             })
+    }, []);
+
     return (
         <div className='cart'>
             <br/>

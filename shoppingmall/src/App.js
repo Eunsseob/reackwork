@@ -7,6 +7,7 @@ import Detail from './pages/Detail';
 import axios from 'axios';
 import Cart from './pages/Cart';
 import Signup from './pages/Signup';
+import Login from './pages/login';
 
 function App() {
   // localStorage : 웹페이지에 있는 저장공간. 청소만 하지않으면 반영구적임
@@ -36,6 +37,7 @@ function App() {
 
   const [clothes, setClothes] = useState(pList);
   const [clickCount, setClickCount] = useState(2);
+  const [loginUser, setLoginUser] = useState(null);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -43,6 +45,13 @@ function App() {
       localStorage.setItem('recentProduct', JSON.stringify([]))
     }
   })
+
+  useEffect(() => {
+    const user = sessionStorage.getItem('loginUser');
+    if(user){
+      setLoginUser(JSON.parse(user));
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -53,6 +62,19 @@ function App() {
             <Nav.Link onClick={()=> {navigate('/')}}>홈</Nav.Link>
             <Nav.Link onClick={()=> {navigate('/cart')}}>장바구니</Nav.Link>
             <Nav.Link onClick={()=> {navigate('/signup')}}>회원가입</Nav.Link>
+            <Nav.Link onClick={()=> {
+              if(loginUser){
+              sessionStorage.removeItem('loginUser');
+              setLoginUser(null);
+              navigate('/')
+              } else {
+              navigate('/login')}
+              }}>{loginUser ? '로그아웃' : '로그인하기'}</Nav.Link>
+          </Nav>
+          <Nav>
+            {loginUser &&  (<Navbar.Text style={{color:'white'}}>
+              환영합니다, {loginUser.name}님!
+            </Navbar.Text>)}
           </Nav>
         </Container>
       </Navbar>
@@ -88,6 +110,8 @@ function App() {
         <Route path="/detail/:pid" element={<Detail clothes={clothes}/>} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login setLoginUser={setLoginUser} />} />
+        
         <Route path="*" element={<div>없는 페이지 입니다</div>} />
       </Routes>
     </div>
